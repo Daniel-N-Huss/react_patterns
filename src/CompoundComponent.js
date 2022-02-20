@@ -1,4 +1,4 @@
-import {createContext, useState} from "react";
+import {createContext, useCallback, useMemo, useState} from "react";
 
 const CompoundComponent = () => {
     return (
@@ -16,10 +16,12 @@ const Expandable = ({children}) => {
     const {Provider} = ExpandableContent
 
     const [expanded, setExpanded] = useState(false)
-
+    const toggleExpanded = useCallback(() => setExpanded(prevExpanded => !prevExpanded), [])
+    const value = useMemo(() => ({expanded, toggleExpanded}), [expanded, toggleExpanded()])
+    
     return (
         <>
-            <Provider>
+            <Provider value={value}>
                 {children}
             </Provider>
         </>

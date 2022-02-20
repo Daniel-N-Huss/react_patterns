@@ -1,32 +1,18 @@
-import {createContext, useCallback, useMemo, useState} from "react";
+import Expandable from "./components/Expandable";
 
 const CompoundComponent = () => {
     return (
-        <Expandable>
-            <p>Expandable</p>
-            <p>Header</p>
-            <p>Button</p>
-            <p>Body</p>
-        </Expandable>
-    )
-}
-
-const Expandable = ({children}) => {
-    const ExpandableContent = createContext()
-    const {Provider} = ExpandableContent
-
-    const [expanded, setExpanded] = useState(false)
-    const toggleExpanded = useCallback(() => setExpanded(prevExpanded => !prevExpanded), [])
-    const value = useMemo(() => ({expanded, toggleExpanded}), [expanded, toggleExpanded()])
-    
-    return (
         <>
-            <Provider value={value}>
-                {children}
-            </Provider>
+            <h1>Expandable</h1>
+            <Expandable onExpand={() => console.log("Banana")}>
+                <Expandable.Header>
+                    <p> Compound Hook Component </p>
+                </Expandable.Header>
+                <Expandable.Icon/>
+                <Expandable.Body> Secrets! </Expandable.Body>
+            </Expandable>
         </>
     )
 }
-
 
 export default CompoundComponent
